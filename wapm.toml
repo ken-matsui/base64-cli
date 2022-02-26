@@ -1,5 +1,5 @@
 [package]
-name = "base64"
+name = "ken-matsui/base64"
 version = "0.1.0"
 description = "Base64 in WebAssembly"
 license = "MIT"
@@ -13,7 +13,7 @@ source = "target/wasm32-wasi/release/base64-cli.wasm"
 abi = "wasi"
 
 [module.interfaces]
-wasi = "0.0.0-unstable"
+wasi = "0.1.0-unstable"
 
 [[command]]
 name = "base64"
