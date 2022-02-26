@@ -18,7 +18,7 @@ This application also provides a wasm package.
 You can install it using [`wapm`](https://wapm.io/help/install) by the following command:
 
 ```bash
-$ wapm install base64
+$ wapm install ken-matsui/base64
 ```
 
 ## Usage
