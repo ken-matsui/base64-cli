@@ -1,0 +1,92 @@
+name: Rust
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose
+
+  build-wasm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+        override: true
+        target: wasm32-wasi
+    - name: Build
+      run: cargo build --verbose --target wasm32-wasi
+
+  run:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run
+      run: cargo run encode hello
+
+  run-wasm:
+    needs: build-wasm
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+        override: true
+        target: wasm32-wasi
+    - name: Build
+      run: cargo build --verbose --target wasm32-wasi
+    - run: brew install wasmer
+    - run: wasmer run target/wasm32-wasi/debug/base64-cli.wasm encode hello
+
+  format:
+    needs: [run, run-wasm]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+        override: true
+        components: rustfmt
+    - run: cargo fmt --all -- --check
+
+  lint:
+    needs: [run, run-wasm]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+        override: true
+        components: clippy
+    - uses: actions-rs/clippy-check@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        args: --all-targets --all-features -- -D clippy::all -D warnings
+
+  test:
+    needs: [format, lint]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
