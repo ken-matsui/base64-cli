@@ -122,8 +122,8 @@ $ wasmer run target/wasm32-wasi/debug/base64-cli.wasm encode hello
 This command can also test C API.
 
 ```bash
-$ cargo build --release
-$ cargo test --release
+$ cargo build
+$ cargo test
 ```
 
 ### Publish
