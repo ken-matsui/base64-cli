@@ -49,7 +49,7 @@ jobs:
         name: target
         path: target
     - name: Run
-      run: cargo run encode hello
+      run: ./target/debug/base64-cli encode hello
 
   run-wasm:
     needs: build-wasm
