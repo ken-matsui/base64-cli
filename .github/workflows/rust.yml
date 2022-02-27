@@ -16,6 +16,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --verbose
+    - uses: actions/upload-artifact@v2
+      with:
+        name: target
+        path: target
 
   build-wasm:
     runs-on: ubuntu-latest
@@ -29,6 +33,10 @@ jobs:
         target: wasm32-wasi
     - name: Build
       run: cargo build --verbose --target wasm32-wasi
+    - uses: actions/upload-artifact@v2
+      with:
+        name: target-wasm
+        path: target
 
   run:
     needs: build
@@ -36,6 +44,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: target
+        path: target
     - name: Run
       run: cargo run encode hello
 
@@ -50,8 +62,10 @@ jobs:
         toolchain: stable
         override: true
         target: wasm32-wasi
-    - name: Build
-      run: cargo build --verbose --target wasm32-wasi
+    - uses: actions/download-artifact@v2
+      with:
+        name: target-wasm
+        path: target
     - run: brew install wasmer
     - run: wasmer run target/wasm32-wasi/debug/base64-cli.wasm encode hello
 
@@ -69,6 +83,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: target
+        path: target
     - uses: actions-rs/clippy-check@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -80,7 +98,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
+    - uses: actions/download-artifact@v2
+      with:
+        name: target
+        path: target
     - name: Run tests
       run: cargo test --verbose
