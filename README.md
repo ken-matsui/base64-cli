@@ -1,6 +1,6 @@
 # base64-cli [![crates.io version](https://img.shields.io/crates/v/base64-cli.svg)](https://crates.io/crates/base64-cli) [![crates.io downloads](https://img.shields.io/crates/d/base64-cli.svg)](https://crates.io/crates/base64-cli)
 
-A CLI tool for base64 which supports both native and [WebAssembly](#WebAssembly)
+A CLI tool for base64 which supports both native and WebAssembly
 
 *Note: This project is a fork of the original Rust implementation: [rust-base64](https://github.com/marshallpierce/rust-base64).*
 
