@@ -31,7 +31,6 @@ jobs:
       run: cargo build --verbose --target wasm32-wasi
 
   run:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +39,6 @@ jobs:
       run: cargo run encode hello
 
   run-wasm:
-    needs: build-wasm
     runs-on: macos-latest
 
     steps:
@@ -56,7 +54,6 @@ jobs:
     - run: wasmer run target/wasm32-wasi/debug/base64-cli.wasm encode hello
 
   format:
-    needs: [run, run-wasm]
     runs-on: ubuntu-latest
 
     steps:
@@ -64,7 +61,6 @@ jobs:
     - run: cargo fmt --all -- --check
 
   lint:
-    needs: [run, run-wasm]
     runs-on: ubuntu-latest
 
     steps:
@@ -75,10 +71,11 @@ jobs:
         args: --all-targets --all-features -- -D clippy::all -D warnings
 
   test:
-    needs: [format, lint]
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
