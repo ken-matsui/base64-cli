@@ -2,7 +2,7 @@ mod lib;
 
 use clap::{Parser, Subcommand};
 use lib::{decode as c_api_decode, encode as c_api_encode};
-use std::ffi::{CStr, CString};
+use std::ffi::CString;
 use std::os::raw::c_char;
 
 #[derive(Parser)]
@@ -25,13 +25,13 @@ enum Commands {
 fn encode(input: &str) -> String {
     let input_c_str = CString::new(input).unwrap();
     let input_c_char: *const c_char = input_c_str.as_ptr() as *const c_char;
-    let output_c_str = unsafe { CStr::from_ptr(c_api_encode(input_c_char)) };
+    let output_c_str = unsafe { CString::from_raw(c_api_encode(input_c_char)) };
     output_c_str.to_str().unwrap().to_string()
 }
 fn decode(input: &str) -> String {
     let input_c_str = CString::new(input).unwrap();
     let input_c_char: *const c_char = input_c_str.as_ptr() as *const c_char;
-    let output_c_str = unsafe { CStr::from_ptr(c_api_decode(input_c_char)) };
+    let output_c_str = unsafe { CString::from_raw(c_api_decode(input_c_char)) };
     output_c_str.to_str().unwrap().to_string()
 }
 

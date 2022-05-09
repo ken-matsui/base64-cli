@@ -1,29 +1,42 @@
 use std::ffi::{CStr, CString};
-use std::mem;
 use std::os::raw::c_char;
 
 /// # Safety
 ///
-/// This public function might dereference a raw pointer.
+/// The returned char pointer should be freed by the `cstring_free` function.
+/// For detailed usage in any language, please see:
+/// https://jakegoulding.com/rust-ffi-omnibus/string_return/
 #[no_mangle]
-pub unsafe extern "C" fn encode(input: *const c_char) -> *const c_char {
+pub unsafe extern "C" fn encode(input: *const c_char) -> *mut c_char {
     let input_c_str = CStr::from_ptr(input);
     let output = CString::new(base64::encode(input_c_str.to_str().unwrap())).unwrap();
-    let ptr = output.as_ptr();
-    mem::forget(output);
-    ptr
+    output.into_raw()
 }
 
 /// # Safety
 ///
-/// This public function might dereference a raw pointer.
+/// The returned char pointer should be freed by the `cstring_free` function.
+/// For detailed usage in any language, please see:
+/// https://jakegoulding.com/rust-ffi-omnibus/string_return/
 #[no_mangle]
-pub unsafe extern "C" fn decode(input: *const c_char) -> *const c_char {
+pub unsafe extern "C" fn decode(input: *const c_char) -> *mut c_char {
     let input_c_str = CStr::from_ptr(input);
     let output = CString::new(base64::decode(input_c_str.to_str().unwrap()).unwrap()).unwrap();
-    let ptr = output.as_ptr();
-    mem::forget(output);
-    ptr
+    output.into_raw()
+}
+
+/// # Safety
+///
+/// This function is for freeing a pointer of the argument.
+/// The pointer should be allocated with `CString` in the Rust world.
+#[no_mangle]
+pub unsafe extern "C" fn cstring_free(s: *mut c_char) {
+    if s.is_null() {
+        return;
+    }
+
+    // retake pointer to free memory
+    let _ = CString::from_raw(s);
 }
 
 #[cfg(test)]
@@ -39,9 +52,9 @@ mod tests {
 
             int main() {
                 const char* input = "hello";
-                const char* output = encode(input);
+                char* output = encode(input);
                 printf("%s", output);
-                free((char*)output);
+                cstring_free(output);
                 return 0;
             }
         })
@@ -58,9 +71,9 @@ mod tests {
 
             int main() {
                 const char* input = "aGVsbG8=";
-                const char* output = decode(input);
+                char* output = decode(input);
                 printf("%s", output);
-                free((char*)output);
+                cstring_free(output);
                 return 0;
             }
         })
