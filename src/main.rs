@@ -6,7 +6,7 @@ use std::ffi::CString;
 use std::os::raw::c_char;
 
 #[derive(Parser)]
-#[clap(author, version, about, long_about = None)]
+#[clap(version, about, long_about = None)]
 #[clap(propagate_version = true)]
 struct Cli {
     #[clap(subcommand)]
