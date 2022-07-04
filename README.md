@@ -26,7 +26,6 @@ $ wapm install ken-matsui/base64
 ```bash
 $ base64-cli --help
 base64-cli 0.1.0
-Ken Matsui <26405363+ken-matsui@users.noreply.github.com>
 A CLI tool for base64
 
 USAGE:
@@ -47,7 +46,6 @@ SUBCOMMANDS:
 ```bash
 $ wapm run base64 --help
 base64-cli 0.1.0
-Ken Matsui <26405363+ken-matsui@users.noreply.github.com>
 A CLI tool for base64
 
 USAGE:
