@@ -14,7 +14,7 @@ documentation = "https://docs.rs/base64-cli"
 crate-type = ["cdylib"]
 
 [dependencies]
-clap = { version = "4.0", features = ["derive"] }
+clap = { version = "4.1", features = ["derive"] }
 base64 = "0.20"
 
 [dev-dependencies]
