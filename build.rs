@@ -9,7 +9,7 @@ fn main() {
     target_dir.push(env::var("PROFILE").unwrap());
 
     let mut header_path = target_dir.clone();
-    header_path.push(format!("{}.h", pkg_name));
+    header_path.push(format!("{pkg_name}.h"));
     cbindgen::Builder::new()
         .with_crate(&manifest_dir)
         .with_language(cbindgen::Language::C)
@@ -18,6 +18,7 @@ fn main() {
         .write_to_file(header_path);
 
     let include_and_shared_object_dir = target_dir.as_path().to_string_lossy();
+    #[allow(clippy::uninlined_format_args)]
     println!(
         "cargo:rustc-env=INLINE_C_RS_CFLAGS=-I{I} -L{L} -D_DEBUG -D_CRT_SECURE_NO_WARNINGS",
         I = include_and_shared_object_dir,
@@ -25,6 +26,7 @@ fn main() {
     );
 
     let shared_object_name = format!("lib{}.dylib", pkg_name.replace('-', "_"));
+    #[allow(clippy::uninlined_format_args)]
     println!(
         "cargo:rustc-env=INLINE_C_RS_LDFLAGS={shared_object_dir}/{lib}",
         shared_object_dir = include_and_shared_object_dir,
