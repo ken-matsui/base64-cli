@@ -50,7 +50,7 @@ checksum = "0ea22880d78093b0cbe17c89f64a7d457941e65759157ec6cb31a31d652b05e5"
 
 [[package]]
 name = "base64-cli"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "base64",
  "cbindgen",

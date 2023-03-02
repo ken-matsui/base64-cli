@@ -1,6 +1,6 @@
 [package]
 name = "base64-cli"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 authors = ["Ken Matsui <26405363+ken-matsui@users.noreply.github.com>"]
 description = "A CLI tool for base64"
