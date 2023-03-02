@@ -1,6 +1,6 @@
 [package]
 name = "ken-matsui/base64"
-version = "0.1.5"
+version = "0.1.4"
 description = "Base64 in WebAssembly"
 license = "MIT"
 readme = "README.md"
