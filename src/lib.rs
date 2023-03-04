@@ -1,7 +1,8 @@
-use base64::engine::general_purpose;
-use base64::Engine;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
+
+use base64::engine::general_purpose;
+use base64::Engine;
 
 /// # Safety
 ///
