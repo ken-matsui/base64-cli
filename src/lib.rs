@@ -1,7 +1,7 @@
+use base64::engine::general_purpose;
+use base64::Engine;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
-use base64::Engine;
-use base64::engine::general_purpose;
 
 /// # Safety
 ///
@@ -11,7 +11,8 @@ use base64::engine::general_purpose;
 #[no_mangle]
 pub unsafe extern "C" fn encode(input: *const c_char) -> *mut c_char {
     let input_c_str = CStr::from_ptr(input);
-    let output = CString::new(general_purpose::STANDARD.encode(input_c_str.to_str().unwrap())).unwrap();
+    let output =
+        CString::new(general_purpose::STANDARD.encode(input_c_str.to_str().unwrap())).unwrap();
     output.into_raw()
 }
 
@@ -23,7 +24,12 @@ pub unsafe extern "C" fn encode(input: *const c_char) -> *mut c_char {
 #[no_mangle]
 pub unsafe extern "C" fn decode(input: *const c_char) -> *mut c_char {
     let input_c_str = CStr::from_ptr(input);
-    let output = CString::new(general_purpose::STANDARD.decode(input_c_str.to_str().unwrap()).unwrap()).unwrap();
+    let output = CString::new(
+        general_purpose::STANDARD
+            .decode(input_c_str.to_str().unwrap())
+            .unwrap(),
+    )
+    .unwrap();
     output.into_raw()
 }
 
