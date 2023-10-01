@@ -21,4 +21,4 @@ base64 = "0.21"
 inline-c = "0.1"
 
 [build-dependencies]
-cbindgen = "0.25"
+cbindgen = "0.26"
