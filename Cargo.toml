@@ -15,7 +15,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
-base64 = "0.21"
+base64 = "0.22"
 
 [dev-dependencies]
 inline-c = "0.1"
