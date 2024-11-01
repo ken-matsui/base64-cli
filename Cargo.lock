@@ -236,9 +236,9 @@ dependencies = [
 
 [[package]]
 name = "inline-c"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "340dd3d6102fa919bd20987024a6d84954c36ec691ac1efea37742ee983c8dd5"
+checksum = "ced39871c8d450695c9ddf7999e06da4c05ba3135aba2407837b3e20a3bb6aa0"
 dependencies = [
  "assert_cmd",
  "cc",
