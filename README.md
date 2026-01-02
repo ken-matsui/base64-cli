@@ -110,9 +110,9 @@ $ cargo run
 #### WebAssembly
 
 ```bash
-$ rustup target add wasm32-wasi
-$ cargo build --target wasm32-wasi
-$ wasmer run target/wasm32-wasi/debug/base64-cli.wasm encode hello
+$ rustup target add wasm32-wasip1
+$ cargo build --target wasm32-wasip1
+$ wasmer run target/wasm32-wasip1/debug/base64-cli.wasm encode hello
 ```
 
 ### Test
@@ -142,6 +142,6 @@ $ cargo publish
 #### [wapm.io](https://wapm.io/)
 
 ```bash
-$ cargo build --release --target wasm32-wasi
+$ cargo build --release --target wasm32-wasip1
 $ wapm publish
 ```
