@@ -9,7 +9,7 @@ homepage = "https://github.com/ken-matsui/base64-cli#readme"
 
 [[module]]
 name = "base64"
-source = "target/wasm32-wasi/release/base64-cli.wasm"
+source = "target/wasm32-wasip1/release/base64-cli.wasm"
 abi = "wasi"
 
 [module.interfaces]

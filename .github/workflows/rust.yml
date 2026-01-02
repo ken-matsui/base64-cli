@@ -26,9 +26,9 @@ jobs:
       with:
         toolchain: stable
         override: true
-        target: wasm32-wasi
+        target: wasm32-wasip1
     - name: Build
-      run: cargo build --verbose --target wasm32-wasi
+      run: cargo build --verbose --target wasm32-wasip1
 
   run:
     runs-on: ubuntu-latest
@@ -47,11 +47,11 @@ jobs:
       with:
         toolchain: stable
         override: true
-        target: wasm32-wasi
+        target: wasm32-wasip1
     - name: Build
-      run: cargo build --verbose --target wasm32-wasi
+      run: cargo build --verbose --target wasm32-wasip1
     - run: brew install wasmer
-    - run: wasmer run target/wasm32-wasi/debug/base64-cli.wasm encode hello
+    - run: wasmer run target/wasm32-wasip1/debug/base64-cli.wasm encode hello
 
   format:
     runs-on: ubuntu-latest
